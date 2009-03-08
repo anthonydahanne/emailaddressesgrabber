@@ -1,5 +1,3 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
 
 $:.unshift File.join(File.dirname(__FILE__),'..','lib')
 
@@ -66,8 +64,8 @@ require 'email_address_grabber'
       email_address_grabber = EmailAddressGrabber.new
       email_address_grabber.text_to_parse = string_to_parse
       email_address_grabber.parse_and_find_email_address
-      email_address_grabber.write_to_file("test.txt")
-      test_file = File.new("test.txt",'r')
+      email_address_grabber.write_to_file("email_adresses_to_parse.txt")
+      test_file = File.new("email_adresses_to_parse.txt",'r')
       email_addresses_found_in_file = String.new
       while(line= test_file.gets)
         email_addresses_found_in_file << line

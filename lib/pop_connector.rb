@@ -2,7 +2,6 @@ require 'net/pop'
 
 class PopConnector
 FROM_EMAIL_PATTERN = Regexp.new('(From: )(([a-zA-Z0-9]|[-_&])+\.?([a-zA-Z0-9]|[-_&])*@([a-zA-Z]|[-_&.])*\.{1}(AERO|ARPA|ASIA|BIZ|CAT|COM|COOP|EDU|GOV|INFO|INT|JOBS|MIL|MOBI|MUSEUM|NAME|NET|ORG|PRO|TEL|TRAVEL|XN--JXALPDLP|XN--KGBECHTV|XN--ZCKZAH|[a-z]{2}))',true)
-#CCS_EMAIL_PATTERN = Regexp.new('(Cc : )(([a-zA-Z0-9]|[-_&])+\.?([a-zA-Z0-9]|[-_&])*@([a-zA-Z]|[-_&.])*\.{1}(AERO|ARPA|ASIA|BIZ|CAT|COM|COOP|EDU|GOV|INFO|INT|JOBS|MIL|MOBI|MUSEUM|NAME|NET|ORG|PRO|TEL|TRAVEL|XN--JXALPDLP|XN--KGBECHTV|XN--ZCKZAH|[a-z]{2}(;)?))*',true)
 CCS_EMAIL_PATTERN = Regexp.new('(Cc: )(.*)$',true)
 
   attr_reader :senders
@@ -15,7 +14,6 @@ CCS_EMAIL_PATTERN = Regexp.new('(Cc: )(.*)$',true)
 
   def find_senders_and_ccs_addresses
     if @pop.mails.empty?
-      #puts 'No mail.'
       @senders = nil
       @ccs=nil
     else
@@ -27,7 +25,6 @@ CCS_EMAIL_PATTERN = Regexp.new('(Cc: )(.*)$',true)
         ccs_addresses.each { |i|@ccs.push(i)  } unless ccs_addresses==nil
         @senders.compact!
         @ccs.compact!
-        #puts m.pop
       end
     end
     @pop.finish

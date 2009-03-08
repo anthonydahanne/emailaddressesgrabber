@@ -4,9 +4,7 @@ class EmailAddressGrabber
   attr_accessor :email_addresses_found
 
   EMAIL_PATTERN = Regexp.new('([a-zA-Z0-9]|[-_&])+\.?([a-zA-Z0-9]|[-_&])*@([a-zA-Z]|[-_&.])*\.{1}(AERO|ARPA|ASIA|BIZ|CAT|COM|COOP|EDU|GOV|INFO|INT|JOBS|MIL|MOBI|MUSEUM|NAME|NET|ORG|PRO|TEL|TRAVEL|XN--JXALPDLP|XN--KGBECHTV|XN--ZCKZAH|[a-z]{2})',true)
-  #EMAIL_PATTERN = Regexp.new('([a-zA-Z0-9])+\.{0,1}([a-zA-Z0-9])*@([a-zA-Z])*\.{1}([a-z]{2,4})')
-#EMAIL_PATTERN = Regexp.new("[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b")
-
+  
   def initialize
     
   end
@@ -34,7 +32,6 @@ class EmailAddressGrabber
         @text_to_parse.slice!(current_match)
 
       end
-      #      puts current_match
     end
 
     @email_addresses_found= matches
@@ -49,9 +46,6 @@ class EmailAddressGrabber
     temp_string = String.new
     @email_addresses_found.each{|email_address| temp_string+=email_address+";\n"}
     File.open(file_path, 'w') {|f| f.write(temp_string) }
-
-    #f =  File.new(file_path, 'w')
-    #f.clos
   end
 
 

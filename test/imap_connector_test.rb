@@ -8,7 +8,8 @@ require 'imap_connector'
 
 class ImapConnectorTest < Test::Unit::TestCase
   def test_find_senders_and_ccs_addresses
-    imap_connector = ImapConnector.new('login','pass','host')
+    config = YAML::load(File.open("config.yml"))
+    imap_connector = ImapConnector.new(config['imap']['login'],config['imap']['password'],config['imap']['host'],config['imap']['mailbox'],config['imap']['ssl'],config['imap']['port'])
     imap_connector.find_senders_and_ccs_addresses
     imap_connector.sort_email_addresses(imap_connector.ccs).each() { |email,name| puts name+"  "+email  }
     imap_connector.sort_email_addresses(imap_connector.senders).each() { |email,name| puts name+"  "+email  }
