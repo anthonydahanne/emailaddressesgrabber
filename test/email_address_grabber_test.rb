@@ -32,21 +32,18 @@ require 'email_address_grabber'
     def test_is_email_address_correct
       string_to_parse = 'adre8787sE7897trio@trucmuche.com'
       email_address_grabber = EmailAddressGrabber.new
-      email_address_grabber.email_address_found=string_to_parse
-      assert(email_address_grabber.is_email_address_correct, 'The email address found was not correct')
+      assert(email_address_grabber.is_email_address_correct(string_to_parse), 'The email address found was not correct')
     end
 
     def test_is_email_address_incorrect
       string_to_parse = 'adre8787sE7897trio@trucmuche.i'
       email_address_grabber = EmailAddressGrabber.new
-      email_address_grabber.email_address_found=string_to_parse
-      assert(!email_address_grabber.is_email_address_correct, 'The email address found was not correct')
+      assert(!email_address_grabber.is_email_address_correct(string_to_parse), 'The email address found was not correct')
     end
     def test_is_email_address_incorrect2
       string_to_parse = 'adre8787sE7897trio@trucmuche.ikjljk'
       email_address_grabber = EmailAddressGrabber.new
-      email_address_grabber.email_address_found=string_to_parse
-      assert(!email_address_grabber.is_email_address_correct, 'The email address found was not correct')
+      assert(!email_address_grabber.is_email_address_correct(string_to_parse), 'The email address found was not correct')
     end
     def test_sort_email_addresses
       email_address_grabber = EmailAddressGrabber.new
@@ -76,5 +73,11 @@ require 'email_address_grabber'
       File.delete(test_file.path)
     end
 
+    def test_delete_duplicate_elements
+      email_address_grabber = EmailAddressGrabber.new
+      email_address_grabber.email_addresses_found = ["anthony@truc.com","Anthony@truc.com"]
+      email_address_grabber.delete_duplicate_elements
+      assert_equal ["anthony@truc.com"], email_address_grabber.email_addresses_found
+    end
 
   end

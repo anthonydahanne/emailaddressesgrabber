@@ -1,6 +1,5 @@
 class EmailAddressGrabber
   attr_writer :text_to_parse
-  attr_writer :email_address_found
   attr_accessor :email_addresses_found
 
   EMAIL_PATTERN = Regexp.new('([a-zA-Z0-9]|[-_&])+\.?([a-zA-Z0-9]|[-_&])*@([a-zA-Z]|[-_&.])*\.{1}(AERO|ARPA|ASIA|BIZ|CAT|COM|COOP|EDU|GOV|INFO|INT|JOBS|MIL|MOBI|MUSEUM|NAME|NET|ORG|PRO|TEL|TRAVEL|XN--JXALPDLP|XN--KGBECHTV|XN--ZCKZAH|[a-z]{2})',true)
@@ -9,9 +8,8 @@ class EmailAddressGrabber
     
   end
 
-  def is_email_address_correct
-    if @email_address_found.match(EMAIL_PATTERN) && @email_address_found.match(EMAIL_PATTERN).to_a[0].length == @email_address_found.length
-
+  def is_email_address_correct(email_address_found)
+    if email_address_found.match(EMAIL_PATTERN) && email_address_found.match(EMAIL_PATTERN).to_a[0].length == email_address_found.length
       return true
     else
       return false
@@ -40,6 +38,22 @@ class EmailAddressGrabber
 
   def sort_email_addresses
     @email_addresses_found =  @email_addresses_found.sort{|x,y| x.downcase <=> y.downcase }
+  end
+
+  def delete_duplicate_elements
+    cleaned_array =  Array.new
+    @email_addresses_found.each{|x|
+      found=false
+      cleaned_array.each{|y|
+        if(y.downcase == x.downcase)
+          found=true
+        end
+      }
+      if(!found)
+        cleaned_array.push(x)
+      end
+    }
+    @email_addresses_found=cleaned_array
   end
 
   def write_to_file(file_path)
